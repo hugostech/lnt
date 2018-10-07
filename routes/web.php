@@ -18,3 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::prefix('product')->group(function () {
+    Route::get('list', 'ProductController@listProduct')->name('product_list');
+});
