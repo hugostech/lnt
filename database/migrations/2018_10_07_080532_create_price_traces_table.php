@@ -20,6 +20,7 @@ class CreatePriceTracesTable extends Migration
             $table->float('price');
             $table->text('raw_response')->nullable();
             $table->integer('product_id');
+            $table->uuid('gen_key');
             $table->foreign('product_id')->references('id')->on('products');
         });
     }

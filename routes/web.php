@@ -21,4 +21,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::prefix('product')->group(function () {
     Route::get('list', 'ProductController@listProduct')->name('product_list');
+    Route::get('create', 'ProductController@showCreateProduct')->name('product_create_show');
+    Route::post('create', 'ProductController@createProduct')->name('product_create');
 });
