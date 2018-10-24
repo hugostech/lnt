@@ -3,11 +3,10 @@
         <a href="{{route('home')}}" class="nav-link active"><i class="fe fe-home"></i> Home</a>
     </li>
     <li class="nav-item">
-        <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-box"></i> Interface</a>
+        <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-box"></i> Products</a>
         <div class="dropdown-menu dropdown-menu-arrow">
-            <a href="./cards.html" class="dropdown-item ">Cards design</a>
-            <a href="./charts.html" class="dropdown-item ">Charts</a>
-            <a href="./pricing-cards.html" class="dropdown-item ">Pricing cards</a>
+            <a href="{{route('product_create_show')}}" class="dropdown-item ">Create Product</a>
+            <a href=".{{route('product_list')}}" class="dropdown-item ">Products List</a>
         </div>
     </li>
     <li class="nav-item dropdown">
