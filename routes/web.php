@@ -24,3 +24,7 @@ Route::prefix('product')->group(function () {
     Route::get('create', 'ProductController@showCreateProduct')->name('product_create_show');
     Route::post('create', 'ProductController@createProduct')->name('product_create');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
