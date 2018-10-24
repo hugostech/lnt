@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable=[
-        'bottom_price','status','sku','price'
+        'bottom_price','status','sku','price','name'
     ];
     static function getClient(){
         return new Client([

@@ -30,6 +30,7 @@
                                 {!! Form::open(['route'=>'product_create','method'=>'POST','id'=>'form_save']) !!}
                                 {!! Form::hidden('sku',\Illuminate\Support\Facades\Input::get('sku')) !!}
                                 {!! Form::hidden('price',$product['price']) !!}
+                                {!! Form::hidden('name',$product['name']) !!}
                                     <div class="form-group">
                                         <label class="form-label">Product Details:</label>
                                         <div class="form-control-plaintext">
@@ -65,8 +66,21 @@
 
                                 @endif
                             </div>
-                            <div class="col-md-6 col-lg-8">
-
+                            <div class="col-md-6 col-lg-8" >
+                                @component('components.getProductInfo')
+                                    screem_trace
+                                @endcomponent
+                                <div class="card">
+                                        <div class="card-header">
+                                            <h3 class="card-title">Trace Urls</h3>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table card-table table-striped table-vcenter">
+                                                <tbody id="screem_trace">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -85,7 +99,7 @@
     <script>
         var save_status = 0;
         function saveProduct(btn_save){
-            if (save_status===0){
+            if (save_status===0 && confirm('Are you sure?')){
                 save_status=1;
             }else{
                 return;
@@ -106,6 +120,8 @@
                         if(data.product){
                             console.log('product created success!')
                             console.log(data.product);
+                            console.log($traceUrls);
+                            window.location.href='{{route('product_list')}}';
                         }else{
                             processError(data,btn_save);
                         }
@@ -123,6 +139,15 @@
             save_status=0;
             $(btn_save).removeClass('disabled');
             $(btn_save).text('Save');
+        }
+
+        function removeUrl(elm) {
+            var index = $traceUrls.indexOf($(elm).data('url'));
+            if (index > -1) {
+                $traceUrls.splice(index, 1);
+            }
+            $(elm).closest('tr').remove();
+
         }
     </script>
 @endsection

@@ -10,19 +10,48 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Put Your Trace Url</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    {{--<span aria-hidden="true">&times;</span>--}}
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
                     {{--<label>Put your trace url</label>--}}
-                    <input type="text" class="form-control" placeholder="Put your trace url here">
+                    <input type="text" class="form-control" placeholder="Put your trace url here" id="trace_url_txt">
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="traceurl()">Confirm</button>
             </div>
         </div>
     </div>
 </div>
+<script>
+    var $traceUrls = [];
+    function traceurl() {
+        var url = $('#trace_url_txt').val();
+        if(url.trim()){
+            if(!$traceUrls.includes(url)){
+                $traceUrls.push(url);
+            }
+
+            refresh();
+        }else{
+            return;
+        }
+    }
+
+    function refresh() {
+        var $screem = $('#{{$slot}}');
+        $screem.html('');
+        $.each($traceUrls, function (key, value) {
+            var content = '<tr>' +
+                '<td>'+value+'</td>' +
+                '<td class="w-1"><a href="#" data-url="'+value+'" class="icon" onclick="removeUrl(this)"><i class="fe fe-trash"></i></a></td>' +
+                '</tr>';
+            $screem.append(content);
+        })
+        $('#exampleModal').modal('hide');
+    }
+
+</script>

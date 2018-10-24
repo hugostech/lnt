@@ -1,8 +1,8 @@
 @extends('layouts.dashboard')
 
 @section('content')
+
 <div class="container">
-    <div class="container">
         <div class="page-header">
             <h1 class="page-title">
                 Dashboard
@@ -1586,5 +1586,5 @@
             </div>
         </div>
     </div>
-</div>
+
 @endsection

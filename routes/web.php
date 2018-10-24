@@ -21,6 +21,7 @@ Route::prefix('product')->group(function () {
     Route::get('list', 'ProductController@listProduct')->name('product_list');
     Route::get('create', 'ProductController@showCreateProduct')->name('product_create_show');
     Route::post('create', 'ProductController@createProduct')->name('product_create');
+    Route::post('addTrace/{product_id}', 'ProductController@addTrace')->name('product_add_trace');
 });
 
 Auth::routes();

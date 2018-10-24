@@ -14,6 +14,7 @@ class ProductController extends Controller
      */
     public function listProduct(){
         $products = Product::all();
+        return view('product.list',compact('products'));
     }
 
     /**
@@ -43,6 +44,10 @@ class ProductController extends Controller
             $product = Product::create($request->all());
             return \GuzzleHttp\json_encode(['product'=>$product->id]);
         }
+
+    }
+
+    public function addTrace($product_id, Request $request){
 
     }
 
