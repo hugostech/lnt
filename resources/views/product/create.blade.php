@@ -11,15 +11,17 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 col-lg-4">
+                                {!! Form::open(['route'=>"product_create_show",'method'=>'GET']) !!}
                                 <div class="form-group">
                                     <label class="form-label">SKU Code <span class="form-required">*</span></label>
                                     <div class="input-group">
                                         {!! Form::text('sku',null,['class'=>'form-control','placeholder'=>'sku code','required']) !!}
                                         <span class="input-group-append">
-                                          <button class="btn btn-default" type="button">Find</button>
+                                          <button class="btn btn-default" type="submit">Find</button>
                                         </span>
                                     </div>
                                 </div>
+                                {!! Form::close() !!}
                                 <div class="form-group">
                                     <label class="form-label">Static</label>
                                     <div class="form-control-plaintext">Username</div>
