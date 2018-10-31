@@ -17,6 +17,18 @@ class ProductController extends Controller
         return view('product.list',compact('products'));
     }
 
+    public function searchProducts(Request $request){
+        $this->validate($request, [
+            'key'=>'required',
+        ]);
+        $key = trim($request->input('key'));
+        if ($key===''){
+            return redirect()->route('product_list');
+        }
+        $products = Product::where('sku','like',"%$key%")->get();
+        return view('product.list',compact('products'));
+    }
+
     /**
      * Display create product page
      */
@@ -53,6 +65,32 @@ class ProductController extends Controller
         $product->trace_urls = \GuzzleHttp\json_encode($trace_urls);
         $product->save();
         return \GuzzleHttp\json_encode(['errer'=>0]);
+    }
+
+    public function editProduct($product_id){
+        $product = Product::find($product_id);
+        return view('product.edit',compact('product'));
+    }
+
+    public function updateProduct($product_id, Request $request){
+        $messages = [
+            'bottom_price.required' => 'We need to know your bottom price!',
+        ];
+        $validator = Validator::make($request->all(), [
+            'bottom_price'=>'required|numeric',
+        ],$messages);
+
+        if ($validator->fails()) {
+            return \GuzzleHttp\json_encode($validator->getMessageBag()->toArray());
+        }else{
+            $product = Product::find($product_id);
+            $product->update($request->all());
+            if (!$request->has('status')){
+                $product->status = 0;
+                $product->save();
+            }
+            return \GuzzleHttp\json_encode(['product'=>$product->id]);
+        }
     }
 
 }

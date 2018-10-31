@@ -79,8 +79,8 @@
                             <th>Last Update</th>
                             <th>Status</th>
                             <th>Bottom Price</th>
+                            <th>Special Price</th>
                             <th>Price</th>
-                            {{--<th></th>--}}
                             <th></th>
                         </tr>
                         </thead>
@@ -88,8 +88,8 @@
                         @foreach($products as $product)
                             <tr>
                                 <td><span class="text-muted">{{$product->id}}</span></td>
-                                <td><a href="#" class="text-inherit">{{$product->name}}</a></td>
-                                <td><a href="#" class="text-inherit">{{$product->sku}}</a></td>
+                                <td><a href="{{route('product_edit',['product_id'=>$product->id])}}" class="text-inherit">{{$product->name}}</a></td>
+                                <td><a href="{{route('product_edit',['product_id'=>$product->id])}}" class="text-inherit">{{$product->sku}}</a></td>
                                 <td>{{$product->updated_at}}</td>
                                 <td>
                                     @if($product->status==1)
@@ -98,7 +98,8 @@
                                     <span class="status-icon bg-secondary"></span> Stop
                                     @endif
                                 </td>
-                                <td>${{$product->bottom_price}}</td>
+                                <td>${{round($product->bottom_price*1.15*1.1,2)}}</td>
+                                <td>N/A</td>
                                 <td>${{$product->price}}</td>
                                 {{--<td class="text-right">--}}
                                     {{--<a href="javascript:void(0)" class="btn btn-secondary btn-sm">Manage</a>--}}
@@ -107,7 +108,7 @@
                                     {{--</div>--}}
                                 {{--</td>--}}
                                 <td>
-                                    <a class="icon" href="javascript:void(0)">
+                                    <a class="icon" href="{{route('product_edit',['product_id'=>$product->id])}}">
                                         <i class="fe fe-edit"></i>
                                     </a>
                                 </td>

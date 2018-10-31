@@ -33,7 +33,9 @@
         if(url.trim()){
             if(!$traceUrls.includes(url)){
                 $traceUrls.push(url);
+
             }
+            $('#trace_url_txt').val('');
 
             refresh();
         }else{
@@ -53,5 +55,19 @@
         })
         $('#exampleModal').modal('hide');
     }
+
+    function removeUrl(elm) {
+        if(confirm('Are you sure?')){
+            var index = $traceUrls.indexOf($(elm).data('url'));
+            if (index > -1) {
+                $traceUrls.splice(index, 1);
+            }
+            $(elm).closest('tr').remove();
+        }
+
+
+    }
+
+
 
 </script>

@@ -7,45 +7,33 @@
                     <div class="alert alert-danger sr-only" id="create_error_bag">
                     </div>
                     <div class="card-header">
-                        <h3 class="card-title">Create Product</h3>
+                        <h3 class="card-title">Edit Product</h3>
                     </div>
 
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 col-lg-4">
-                                {!! Form::open(['route'=>"product_create_show",'method'=>'GET']) !!}
-                                <div class="form-group">
-                                    <label class="form-label">SKU Code <span class="form-required">*</span></label>
-                                    <div class="input-group">
 
-                                        {!! Form::text('sku',\Illuminate\Support\Facades\Input::get('sku', null),['class'=>'form-control','placeholder'=>'sku code','required']) !!}
-
-                                        <span class="input-group-append">
-                                          <button class="btn btn-default" type="submit">Find</button>
-                                        </span>
-                                    </div>
-                                </div>
-                                {!! Form::close() !!}
                                 @if($product && !empty($product['name']))
-                                {!! Form::open(['route'=>'product_create','method'=>'POST','id'=>'form_save']) !!}
+                                {!! Form::model($product,['route'=>['product_update',$product->id],'method'=>'POST','id'=>'form_save']) !!}
                                 {!! Form::hidden('sku',\Illuminate\Support\Facades\Input::get('sku')) !!}
                                 {!! Form::hidden('price',$product['price']) !!}
                                 {!! Form::hidden('name',$product['name']) !!}
+                                <div class="form-group">
+                                    <label>Product Sku:</label>
+                                    {!! Form::text('sku',null,['class'=>'form-control','readonly']) !!}
+                                </div>
+                                <div class="form-group">
+                                    <label>Product Name:</label>
+                                    {!! Form::text('name',null,['class'=>'form-control','required']) !!}
+                                </div>
+                                <div class="form-group">
+                                    <label>Product Price:</label>
+                                    {!! Form::text('price',null,['class'=>'form-control','required']) !!}
+                                </div>
+
                                     <div class="form-group">
-                                        <label class="form-label">Product Details:</label>
-                                        <div class="form-control-plaintext">
-                                            <strong>{{$product['name']}}</strong><br>
-                                            <label>Price:</label> ${{$product['price']}} | <label>Qty:</label> {{$product['qty']}}<br>
-                                            <label>Status:</label>
-                                            @if($product['status'])
-                                                <span class="status-icon bg-success"></span> Enable
-                                            @else
-                                                <span class="status-icon bg-secondary"></span> Disable
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Bottom Price: <span id="bottom_rate_span"></span><span class="form-required">*</span></label>
+                                        <label class="form-label">Bottom Price: <span id="bottom_rate_span">${{round($product->bottom_price*1.15*1.1,2)}}</span><span class="form-required">*</span></label>
                                         <div class="input-group">
                                           <span class="input-group-prepend">
                                             <span class="input-group-text">$</span>
@@ -57,7 +45,11 @@
                                     <div class="form-group">
                                         <div class="form-label">Start Trace</div>
                                         <label class="custom-switch">
+                                            @if($product->status==1)
+                                            <input type="checkbox" name="status" class="custom-switch-input" value="1" checked>
+                                            @else
                                             <input type="checkbox" name="status" class="custom-switch-input" value="1">
+                                            @endif
                                             <span class="custom-switch-indicator"></span>
                                             <span class="custom-switch-description"></span>
                                         </label>
@@ -118,7 +110,7 @@
                     {
                         data = JSON.parse(result);
                         if(data.product){
-                            console.log('product created success!')
+                            console.log('product update success!')
                             console.log(data.product);
                             var addTraceUrl = "/product/addtrace/"+data.product;
                             $.ajax({
@@ -154,6 +146,7 @@
         }
 
 
+
         $(document).ready(function () {
             $('#cost_input').change(function () {
 
@@ -166,6 +159,13 @@
                     return false;
                 }
             });
+            @if($product->trace_urls=='null' || empty($product->trace_urls))
+                $traceUrls = [];
+            @else
+                $traceUrls = {!! $product->trace_urls !!};
+            @endif
+
+            refresh();
         })
     </script>
 @endsection
