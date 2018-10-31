@@ -48,7 +48,11 @@ class ProductController extends Controller
     }
 
     public function addTrace($product_id, Request $request){
-
+        $trace_urls = $request->input('trace');
+        $product = Product::find($product_id);
+        $product->trace_urls = \GuzzleHttp\json_encode($trace_urls);
+        $product->save();
+        return \GuzzleHttp\json_encode(['errer'=>0]);
     }
 
 }

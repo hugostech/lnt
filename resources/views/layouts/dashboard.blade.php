@@ -12,6 +12,8 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{asset('images/favicon.ico')}}" type="image/x-icon"/>
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('images/favicon.ico')}}" />
     <!-- Generated: 2018-04-16 09:29:05 +0200 -->
@@ -79,7 +81,7 @@
                         {{--</div>--}}
                         <div class="dropdown">
                             <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
-                                <span class="avatar" style="background-image: url(./demo/faces/female/25.jpg)"></span>
+                                {{--<span class="avatar" style="background-image: url(./demo/faces/female/25.jpg)"></span>--}}
                                 <span class="ml-2 d-none d-lg-block">
                       <span class="text-default">{{Auth::user()->name}}</span>
                       <small class="text-muted d-block mt-1">Administrator</small>

@@ -120,8 +120,20 @@
                         if(data.product){
                             console.log('product created success!')
                             console.log(data.product);
-                            console.log($traceUrls);
-                            window.location.href='{{route('product_list')}}';
+                            var addTraceUrl = "/product/addtrace/"+data.product;
+                            $.ajax({
+                                type:'post',
+                                url: addTraceUrl,
+                                data: {trace:$traceUrls},
+                                headers: {
+                                    'X-CSRF-Token': $('meta[name=csrf-token]').attr("content")
+                                },
+                                success:function (result) {
+                                    console.log(result);
+                                    window.location.href='{{route('product_list')}}';
+                                }
+                            });
+
                         }else{
                             processError(data,btn_save);
                         }
