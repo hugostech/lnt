@@ -45,12 +45,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Bottom Price <span class="form-required">*</span></label>
+                                        <label class="form-label">Bottom Price: <span id="bottom_rate_span"></span><span class="form-required">*</span></label>
                                         <div class="input-group">
                                           <span class="input-group-prepend">
                                             <span class="input-group-text">$</span>
                                           </span>
-                                            {!! Form::number('bottom_price',null,['class'=>'form-control text-right','required','step'=>0.01]) !!}
+                                            {!! Form::number('bottom_price',null,['class'=>'form-control text-right','required','step'=>0.01, 'placeholder'=>'Cost','id'=>'cost_input']) !!}
 
                                         </div>
                                     </div>
@@ -161,5 +161,19 @@
             $(elm).closest('tr').remove();
 
         }
+
+        $(document).ready(function () {
+            $('#cost_input').change(function () {
+
+                $('#bottom_rate_span').text('$'+($(this).val()*1.15*1.1).toFixed(2))
+            })
+            $('#form_save').on('keyup keypress', function(e) {
+                var keyCode = e.keyCode || e.which;
+                if (keyCode === 13) {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+        })
     </script>
 @endsection
