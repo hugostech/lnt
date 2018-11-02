@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -90,6 +91,21 @@ class ProductController extends Controller
                 $product->save();
             }
             return \GuzzleHttp\json_encode(['product'=>$product->id]);
+        }
+    }
+
+    /**
+     * receive the spider prices from competitors' website
+     * @param $product_id
+     * @param Request $request
+     */
+    public function collectPrice($product_id, Request $request){
+        $product = Product::find($product_id);
+        if (is_null($product)){
+            return \GuzzleHttp\json_encode(['error'=>1,'message'=>'product dose not exisit']);
+        }else{
+            Log::info($request->getContent());
+            return \GuzzleHttp\json_encode(['error'=>0,'message'=>'ok']);
         }
     }
 

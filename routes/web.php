@@ -25,6 +25,7 @@ Route::prefix('product')->group(function () {
     Route::post('update/{product_id}', 'ProductController@updateProduct')->name('product_update');
     Route::post('searchall', 'ProductController@searchProducts')->name('product_search');
     Route::post('addtrace/{product_id}', 'ProductController@addTrace')->name('product_add_trace');
+    Route::post('pricecollect/{product_id}','ProductController@collectPrice')->name('product_price_collect');
 });
 
 Auth::routes();
