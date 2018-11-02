@@ -27,6 +27,11 @@ class Product extends Model
         }
     }
 
+    /**
+     * get product details from lnt server
+     * @param $sku
+     * @return bool|mixed
+     */
     static function getProductBySku($sku){
         $client = self::getClient();
         $response = $client->get('getProductInfo/'.$sku);
@@ -50,6 +55,22 @@ class Product extends Model
         ];
         $client = self::getClient();
         $response = $client->request('PUT', $url, compact('json'));
+        return self::processResult($response);
+    }
+
+    /**
+     * post urls to spider to grab competitors' price,
+     * job enqueue
+     */
+    function postSyncJob(){
+        $url = 'fetchMProductInfo';
+        $json = [
+            "async" => true,
+            "url" => route('product_price_collect', ['product_id'=>$this->id]),
+            "urls" => $this->trace_urls
+        ];
+        $client = self::getClient();
+        $response = $client->request('POST', $url, compact('json'));
         return self::processResult($response);
     }
 }
