@@ -4,6 +4,7 @@ namespace App;
 
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Product extends Model
 {
@@ -69,6 +70,7 @@ class Product extends Model
             "url" => route('product_price_collect', ['product_id'=>$this->id]),
             "urls" => $this->trace_urls
         ];
+        Log::info('Enqueue job for product',$json);
         $client = self::getClient();
         $response = $client->request('POST', $url, compact('json'));
         return self::processResult($response);
