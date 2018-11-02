@@ -102,10 +102,10 @@ class ProductController extends Controller
     public function collectPrice($product_id, Request $request){
         $product = Product::find($product_id);
         if (is_null($product)){
-            return \GuzzleHttp\json_encode(['error'=>1,'message'=>'product dose not exist']);
+            return response()->json(['error'=>1,'message'=>'product dose not exist']);
         }else{
             Log::info($request->getContent());
-            return \GuzzleHttp\json_encode(['error'=>0,'message'=>'ok']);
+            return response()->json(['error'=>0,'message'=>'ok']);
         }
     }
 
