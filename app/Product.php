@@ -68,7 +68,7 @@ class Product extends Model
         $json = [
             "async" => true,
             "url" => route('product_price_collect', ['product_id'=>$this->id]),
-            "urls" => $this->trace_urls
+            "urls" => \GuzzleHttp\json_decode($this->trace_urls,true)
         ];
 //        Log::info('Enqueue job for product '.$this->id);
 //        Log::info($json);
