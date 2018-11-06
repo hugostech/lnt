@@ -99,7 +99,7 @@
                                     @endif
                                 </td>
                                 <td>${{round($product->bottom_price*1.15*1.1,2)}}</td>
-                                <td>${{$product->special}}</td>
+                                <td><span class="badge badge-secondary">${{$product->special}}</span></td>
                                 <td>${{$product->price}}</td>
                                 {{--<td class="text-right">--}}
                                     {{--<a href="javascript:void(0)" class="btn btn-secondary btn-sm">Manage</a>--}}
