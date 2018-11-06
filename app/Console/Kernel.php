@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->command('sync:push --force')->dailyAt('23:30');
     }
 
     /**
