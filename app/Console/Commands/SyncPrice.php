@@ -62,7 +62,7 @@ class SyncPrice extends Command
     }
 
     private function pushJob(Product $product){
-        $this->line(sprintf('product id: %s, %s in progress'.PHP_EOL,$product->id,$product->name));
+        $this->line(sprintf(PHP_EOL.'product id: %s, %s in progress',$product->id,$product->name));
         $res = $product->postSyncJob();
         if ($res){
             $this->info('Success');
