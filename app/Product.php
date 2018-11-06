@@ -70,8 +70,8 @@ class Product extends Model
             "url" => route('product_price_collect', ['product_id'=>$this->id]),
             "urls" => \GuzzleHttp\json_decode($this->trace_urls,true)
         ];
-//        Log::info('Enqueue job for product '.$this->id);
-//        Log::info($json);
+        Log::info('Enqueue job for product '.$this->id);
+        Log::info($json);
         $client = self::getClient();
         $response = $client->request('POST', $url, compact('json'));
         return self::processResult($response);
