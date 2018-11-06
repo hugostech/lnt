@@ -64,10 +64,11 @@ class SyncPrice extends Command
     private function pushJob(Product $product){
         $this->line(sprintf('product id: %s, %s in progress',$product->id,$product->name));
         $res = $product->postSyncJob();
-        if (!$res){
-            $this->error('Failed');
-        }else{
+        if ($res){
             $this->info('Success');
+        }else{
+            $this->error('Failed');
+
         }
     }
 }
