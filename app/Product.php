@@ -11,6 +11,11 @@ class Product extends Model
     protected $fillable=[
         'bottom_price','status','sku','price','name','trace_urls'
     ];
+
+    public function traces(){
+        return $this->hasMany('App\PriceTrace','product_id','id');
+    }
+
     static function getClient(){
         return new Client([
             // Base URI is used with relative requests
@@ -75,5 +80,33 @@ class Product extends Model
         $client = self::getClient();
         $response = $client->request('POST', $url, compact('json'));
         return self::processResult($response);
+    }
+
+    function processPriceResult($data_raw){
+        $data = json_decode($data_raw,true);
+        $bestPrice = 0;
+        foreach ($data['simpleResponseMsg'] as $i=>$row){
+
+            if ($row['status']==true){
+
+                if ($i==0){
+                    $bestPrice = $row['price'];
+                }
+                $bestPrice = $bestPrice>$row['price']?$row['price']:$bestPrice;
+                $this->traces()->create([
+                    'url'=>$row['url'],
+                    'price'=>$row['price'],
+                    'raw_response'=>$data_raw,
+                    'gen_key'=>$row['name']
+                ]);
+            }
+        }
+        if ($bestPrice>0){
+            $this->special = $bestPrice;
+            return $this->save();
+        }else{
+            return false;
+        }
+
     }
 }
