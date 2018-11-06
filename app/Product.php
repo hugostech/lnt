@@ -102,6 +102,9 @@ class Product extends Model
             }
         }
         if ($bestPrice>0){
+            if ($bestPrice<($this->bottom_price*1.15*1.1)){
+                $bestPrice = $this->bottom_price*1.15*1.1;
+            }
             $this->special = $bestPrice;
             return $this->save();
         }else{
