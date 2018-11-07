@@ -17,7 +17,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::prefix('product')->group(function () {
+Route::prefix('product')->middleware('auth')->group(function () {
     Route::get('list', 'ProductController@listProduct')->name('product_list');
     Route::get('create', 'ProductController@showCreateProduct')->name('product_create_show');
     Route::get('{product_id}/edit', 'ProductController@editProduct')->name('product_edit');
@@ -25,7 +25,6 @@ Route::prefix('product')->group(function () {
     Route::post('update/{product_id}', 'ProductController@updateProduct')->name('product_update');
     Route::post('searchall', 'ProductController@searchProducts')->name('product_search');
     Route::post('addtrace/{product_id}', 'ProductController@addTrace')->name('product_add_trace');
-    Route::post('pricecollect/{product_id}','ProductController@collectPrice')->name('product_price_collect');
 });
 
 Auth::routes();
