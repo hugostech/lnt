@@ -21,7 +21,7 @@ class Product extends Model
             // Base URI is used with relative requests
             'base_uri' => config('lnt_connect.url'),
             // You can set any number of default request options.
-            'timeout'  => 10.0,
+            'timeout'  => 20.0,
         ]);
     }
 
