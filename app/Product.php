@@ -53,14 +53,14 @@ class Product extends Model
         return self::processResult($response);
     }
 
-    static function updatePrice(){
+   function updatePrice($price){
         $url = 'updateProductPrice';
         $json = [
-            'sku'=>'test',
-            'price'=>123.32
+            'sku'=>$this->sku,
+            'price'=>$price
         ];
         $client = self::getClient();
-        $response = $client->request('PUT', $url, compact('json'));
+        $response = $client->request('POST', $url, compact('json'));
         return self::processResult($response);
     }
 
@@ -107,7 +107,8 @@ class Product extends Model
                 $bestPrice = $this->bottom_price*1.15*1.1;
             }
             $this->special = $bestPrice;
-            return $this->save();
+            $this->save();
+            return $this->update($bestPrice);
         }else{
             return false;
         }

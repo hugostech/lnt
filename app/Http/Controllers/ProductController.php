@@ -106,7 +106,8 @@ class ProductController extends Controller
             return response()->json(['error'=>1,'message'=>'product dose not exist']);
         }else{
             Log::info($request->getContent());
-            $product->processPriceResult($request->getContent());
+            $result = $product->processPriceResult($request->getContent());
+            Log::info($result);
             return response()->json(['error'=>0,'message'=>'ok']);
         }
     }
