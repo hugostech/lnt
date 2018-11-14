@@ -107,7 +107,7 @@ class Product extends Model
                 $bestPrice = $this->bottom_price*1.15*1.1;
             }
             $this->special = $bestPrice;
-            return $this->save();
+            $this->save();
             return $this->updatePrice($bestPrice);
         }else{
             return false;
