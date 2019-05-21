@@ -114,4 +114,12 @@ class Product extends Model
         }
 
     }
+
+    public function updateLocalPrice(){
+        $remoteProduct = self::getProductBySku($this->sku);
+        if ($remoteProduct){
+            $this->price = $remoteProduct['price'];
+            $this->save();
+        }
+    }
 }
