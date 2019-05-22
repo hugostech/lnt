@@ -55,7 +55,7 @@ class SyncPrice extends Command
         $products = Product::where('status',1)->get();
         $bar = $this->output->createProgressBar(count($products));
         foreach ($products as $product){
-            $product->updateLocalPrice();
+//            $product->updateLocalPrice();
             $this->pushJob($product);
             $bar->advance();
         }

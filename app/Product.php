@@ -110,6 +110,8 @@ class Product extends Model
             $this->save();
             return $this->updatePrice($bestPrice);
         }else{
+            $this->special = $this->price;
+            $this->save();
             return false;
         }
 
