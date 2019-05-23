@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->command('sync:push --force')->timezone('	Pacific/Auckland')->dailyAt('23:58');
+        $schedule->command('products:sync-price')->timezone('	Pacific/Auckland')->dailyAt('06:00');
     }
 
     /**
