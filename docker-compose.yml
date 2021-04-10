@@ -1,0 +1,32 @@
+version: "3.7"
+services:
+  app:
+    build:
+      args:
+        user: lnt
+        uid: 1001
+      context: ./
+      dockerfile: Dockerfile
+    image: lnt
+    container_name: lnt-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - lnt-network
+  nginx:
+    image: nginx:1.17-alpine
+    container_name: lnt-nginx
+    restart: unless-stopped
+    ports:
+      - 127.0.0.1:8001:80
+    volumes:
+      - ./:/var/www
+      - ./Docker/nginx:/etc/nginx/conf.d
+    networks:
+      - lnt-network
+
+networks:
+  lnt-network:
+    driver: bridge
