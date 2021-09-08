@@ -99,7 +99,8 @@
                                     @endif
                                 </td>
                                 <td>${{round($product->bottom_price*1.15*1.1,2)}}</td>
-                                <td><span class="badge badge-secondary">${{$product->special}}</span></td>
+{{--                                <td><span class="badge badge-secondary">${{$product->special}}</span></td>--}}
+                                <td>${{$product->special}}</td>
                                 <td>${{$product->price}}</td>
                                 {{--<td class="text-right">--}}
                                     {{--<a href="javascript:void(0)" class="btn btn-secondary btn-sm">Manage</a>--}}
@@ -110,6 +111,9 @@
                                 <td>
                                     <a class="icon" href="{{route('product_edit',['product_id'=>$product->id])}}">
                                         <i class="fe fe-edit"></i>
+                                    </a>
+                                    <a class="icon" href="{{route('product_delete',['product_id'=>$product->id])}}" onclick="return confirm('Are you sure you want to delete this product?');">
+                                        <i class="danger fe fe-trash"></i>
                                     </a>
                                 </td>
                             </tr>

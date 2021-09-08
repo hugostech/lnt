@@ -74,6 +74,12 @@ class ProductController extends Controller
         return view('product.edit',compact('product'));
     }
 
+    public function deleteProduct($product_id){
+        $product = Product::find($product_id);
+        $product->delete();
+        return redirect()->back();
+    }
+
     public function updateProduct($product_id, Request $request){
         $messages = [
             'bottom_price.required' => 'We need to know your bottom price!',
