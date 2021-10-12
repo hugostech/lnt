@@ -26,7 +26,12 @@ services:
       - ./Docker/nginx:/etc/nginx/conf.d
     networks:
       - lnt-network
-
+  redis:
+    image: redis:latest
+    container_name: lnt-redis
+    restart: unless-stopped
+    networks:
+      - lnt-network
 networks:
   lnt-network:
     driver: bridge
