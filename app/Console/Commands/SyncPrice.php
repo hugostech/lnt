@@ -64,7 +64,7 @@ class SyncPrice extends Command
 
     private function pushJob(Product $product){
 
-        $product->update(['special'=>1]);
+        $product->update(['special'=>0]);
         $this->line(sprintf(PHP_EOL.'product id: %s, %s in progress',$product->id,$product->name));
         $product->postSyncJob();
     }
