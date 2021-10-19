@@ -2,14 +2,18 @@
 
 namespace App;
 
+use App\Jobs\FetchPriceJob;
+use App\Lib\Mitro10Spider;
+use App\Lib\TheToolsShedSpider;
 use GuzzleHttp\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
     protected $fillable=[
-        'bottom_price','status','sku','price','name','trace_urls'
+        'bottom_price','status','sku','price','name','trace_urls', 'special'
     ];
 
     public function traces(){
@@ -69,17 +73,22 @@ class Product extends Model
      * job enqueue
      */
     function postSyncJob(){
-        $url = 'fetchMProductInfo';
-        $json = [
-            "async" => true,
-            "url" => route('product_price_collect', ['product_id'=>$this->id]),
-            "urls" => \GuzzleHttp\json_decode($this->trace_urls,true)
-        ];
-        Log::info('Enqueue job for product '.$this->id);
-        Log::info($json);
-        $client = self::getClient();
-        $response = $client->request('POST', $url, compact('json'));
-        return self::processResult($response);
+//        $url = 'fetchMProductInfo';
+//        $json = [
+//            "async" => true,
+//            "url" => route('product_price_collect', ['product_id'=>$this->id]),
+//            "urls" => \GuzzleHttp\json_decode($this->trace_urls,true)
+//        ];
+//        Log::info('Enqueue job for product '.$this->id);
+//        Log::info($json);
+//        $client = self::getClient();
+//        $response = $client->request('POST', $url, compact('json'));
+//        return self::processResult($response);
+        $urls = \GuzzleHttp\json_decode($this->trace_urls,true);
+
+        foreach ($urls as $url){
+            FetchPriceJob::dispatch($url, $this);
+        }
     }
 
     function processPriceResult($data_raw){
@@ -88,7 +97,7 @@ class Product extends Model
         foreach ($data['simpleResponseMsg'] as $i=>$row){
 
             if ($row['status']==true){
-                
+
                 if ($i==0){
                     $bestPrice = $row['price'];
                 }

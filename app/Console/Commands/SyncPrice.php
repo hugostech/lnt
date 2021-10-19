@@ -12,7 +12,7 @@ class SyncPrice extends Command
      *
      * @var string
      */
-    protected $signature = 'sync:push 
+    protected $signature = 'sync:push
                             {product? : The ID of product}
                             {--force : Process the task quietly}';
 
@@ -63,13 +63,9 @@ class SyncPrice extends Command
     }
 
     private function pushJob(Product $product){
-        $this->line(sprintf(PHP_EOL.'product id: %s, %s in progress',$product->id,$product->name));
-        $res = $product->postSyncJob();
-        if ($res){
-            $this->info('Success');
-        }else{
-            $this->error('Failed');
 
-        }
+        $product->update(['special'=>1]);
+        $this->line(sprintf(PHP_EOL.'product id: %s, %s in progress',$product->id,$product->name));
+        $product->postSyncJob();
     }
 }

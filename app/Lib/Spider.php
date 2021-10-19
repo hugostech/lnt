@@ -4,6 +4,7 @@ namespace App\Lib;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Response;
+use Illuminate\Support\Facades\Log;
 use phpDocumentor\Reflection\Types\Mixed_;
 use PHPHtmlParser\Dom;
 
@@ -28,8 +29,14 @@ abstract class Spider
      * @return float product price
      */
     public function handle(){
-        $content = $this->curl->get($this->url);
-        return $this->analyse($content);
+        try {
+            $content = $this->curl->get($this->url);
+            return $this->analyse($content);
+        }catch (\Exception $e){
+            Log::error($e->getMessage());
+            return false;
+        }
+
     }
 
     /**
